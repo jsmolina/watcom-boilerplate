@@ -9,3 +9,8 @@ An Openwatcom v2 boilerplate.
    docker-compose up      # runs asset generation + compilation
    ```
 3. After success you’ll get an MS-DOS-compatible executable for 16-bit and another for 32-bit on `dist` folder.
+4. 
+## License & Contributions
+
+Feel free to fork this repository, modify the boilerplate for your own MS-DOS game projects, and contribute back improvements (asset pipelines, more game-loop examples, cross-platform testing).
+If you make major improvements, submitting a pull request is welcome.
