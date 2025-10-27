@@ -35,16 +35,31 @@ CCOPTS = $(EXTERNOPT) -omaxtnrih -ol+ -oe=32 -zp4 -3r -ei -j -zq -zc $(WCCOPTS)
 # Build options for profiling (Pentium required)
 #CCOPTS = $(EXTERNOPT) -omaxtnrih -ol+ -oe=32 -zp4 -5r -ei -j -zq -zc -et $(WCCOPTS)
 
+# Valor por defecto
+EXE ?= main32.exe
+
+# Selección del compilador
+ifeq ($(EXE),main16.exe)
+CC = wcl
+MODEL = s        # modelo pequeño típico 16 bits
+else
+CC = wcl386
+MODEL =
+endif
+
 NASMOPTS = $(EXTERNOPT) $(NASMOPT)
+SRC = main.c game.c
+GLOBOBJS = $(SRC:.c=.obj)
 
-GLOBOBJS = \
- main.obj
+build32:
+	$(CC) $(SRC) -fe=main.exe  -zp4 -3r -ei -j -zq -zc -ol+ -oe=32 -l=dos4g
 
-main.exe : $(GLOBOBJS)
-	wcl386 main.c -fe=main.exe -zp4 -3r -ei -j -zq -zc -ol+ -oe=32 -l=dos4g	
+build16:
+	$(CC) $(SRC) -fe=main.exe 
 
-main16.exe : $(GLOBOBJS)
-	wcl main.c -fe=main16.exe
+
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
 
 %.obj : %.c
 	wcc386 $(CCOPTS) $^ -fo=$@
@@ -54,15 +69,11 @@ main16.exe : $(GLOBOBJS)
 
 DELCMD=rm -f
 
+
+
+clean_objs:
+	echo "clean obj"
+	rm -f *.obj
+
 clean:
-	pwd
-	-$(DELCMD) *.exe
-	-$(DELCMD) *.map
-	-$(DELCMD) *.err
-	-$(DELCMD) *.obj
-	-$(DELCMD) *.sym
-	-$(DELCMD) *.EXE
-	-$(DELCMD) *.MAP
-	-$(DELCMD) *.ERR
-	-$(DELCMD) *.OBJ
-	-$(DELCMD) *.SYM
+	rm -f *.obj *.exe

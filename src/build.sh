@@ -10,9 +10,11 @@ fi
 
 buildopts=""
 
-make -j $(nproc) -f Makefile.gnu main.exe EXTERNOPT="$buildopts $@" NASMOPT="$nasmbuildopts" WCCOPTS="$wccbuildopts"
+make -j $(nproc) -f Makefile.gnu clean_objs
+make -j $(nproc) -f Makefile.gnu build32 EXE=main32.exe EXTERNOPT="$buildopts $@" NASMOPT="$nasmbuildopts" WCCOPTS="$wccbuildopts"
+mv main.exe ../dist/main32.exe
 
-make -j $(nproc) -f Makefile.gnu main16.exe EXTERNOPT="$buildopts $@" NASMOPT="$nasmbuildopts" WCCOPTS="$wccbuildopts"
+make -j $(nproc) -f Makefile.gnu clean_objs
+make -j $(nproc) -f Makefile.gnu build16 EXE=main16.exe EXTERNOPT="$buildopts $@" NASMOPT="$nasmbuildopts" WCCOPTS="$wccbuildopts"
+mv main.exe ../dist/main16.exe
 
-cp main.exe ../dist
-cp main16.exe ../dist
