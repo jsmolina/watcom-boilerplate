@@ -1,0 +1,10 @@
+# docker-compose.yml
+
+services:
+  builder:
+    build: .
+    volumes:
+      - ./src:/app           # Monta el proyecto local
+      - ./dist:/dist # Carpeta compartida para resultados
+    working_dir: /app
+    command: /bin/bash -c -e "./build.sh"
